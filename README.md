@@ -162,7 +162,6 @@
 |----------------|-------------|---------------------------------|--------------------------------------------|
 | id             | INT         | PK                              | Required, unique, auto-increment, not null |          
 | company_id     | INT         | FK to "Companies"               | Required                                   |
-| product_type   | ENUM        | Тип продукта                    | Required, not null                         |
 | product_name   | VARCHAR(32) | Название продукта               | Required, not null                         |
 | product_cost   | DECIMAL     | Стоимость продукта (в копейках) | Required, not null                         |
 | product_amount | INT         | Количество продукта             | Required, not null                         |
