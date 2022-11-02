@@ -1,15 +1,16 @@
-CREATE TYPE role AS ENUM ('staff', 'client', 'company');
+CREATE TYPE roles AS ENUM ('staff', 'client', 'company');
 CREATE TYPE sex AS ENUM ('male', 'female');
-CREATE TYPE type AS ENUM ('passport', 'residence', 'permit');
+CREATE TYPE types AS ENUM ('passport', 'residence', 'permit');
 CREATE TYPE loan_status AS ENUM ('created', 'confirmed', 'issued', 'redeemed', 'overdue');
 CREATE TYPE loan_type AS ENUM ('installment', 'credit');
+CREATE TYPE log_type AS ENUM ('error', 'warning', 'info');
 
 CREATE TABLE users (
     id              int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     email           varchar(64) UNIQUE NOT NULL,
     username        varchar(16) UNIQUE NOT NULL,
     user_password   varchar(32) UNIQUE NOT NULL,
-    user_role       role
+    user_role       roles
 );
 
 CREATE TABLE staff_roles (
@@ -33,7 +34,8 @@ CREATE TABLE logs (
     id              int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id         int,
     staff_role_id   int,
-    event           json,
+    log_type        log_type NOT NULL,
+    log_message     varchar(64),
     time_stamp      timestamp,
     CONSTRAINT fk_user
         FOREIGN KEY(user_id)
@@ -60,7 +62,7 @@ CREATE TABLE citizenships (
 CREATE TABLE documents (
     id                  int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     citizenship_id      int,
-    current_type        type NOT NULL,
+    current_type        types NOT NULL,
     documents_number    char NOT NULL,
     issue_date          date,
     expiration_date     date,

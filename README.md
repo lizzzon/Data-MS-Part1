@@ -53,7 +53,7 @@
 
 ### Схема БД
 
-![image](./files/lab.png)
+![image](./files/db.png)
 
 ---
 
@@ -93,7 +93,8 @@
 | id            | INT         | PK                       | Required, unique, auto-increment, not null | 
 | user_id       | INT         | FK to "Users"            | Required, unique, not null                 |
 | staff_role_id | INT         | FK to "Staff"            | Required, not null                         |
-| event         | JSON        | Событие в формате json   | Required, not null                         |
+| log_type         | ENUM (Error, Warning, Info)        | Событие    | Required, not null              |
+| log_message         | VARCHAR(64)       | Сообщение о событии    | Required, not null              |
 | timestamp     | TIMESTAMPTZ | Время лога               | Required, not null                         |
 
 5. Clients (клиенты)
