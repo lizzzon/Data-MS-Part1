@@ -44,6 +44,7 @@ CREATE TABLE logs (
         FOREIGN KEY(staff_role_id)
             REFERENCES staff_roles(id)
 );
+
 CREATE TABLE countries (
     id              int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     country_name    varchar(32) NOT NULL
@@ -63,7 +64,7 @@ CREATE TABLE documents (
     id                  int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     citizenship_id      int,
     current_type        types NOT NULL,
-    documents_number    char NOT NULL,
+    documents_number    varchar(16) NOT NULL,
     issue_date          date,
     expiration_date     date,
     CONSTRAINT fk_citizenship
@@ -136,7 +137,7 @@ CREATE TABLE loans (
     loan_status                 loan_status NOT NULL,
     loan_type                   loan_type NOT NULL,
     order_amount                int NOT NULL,
-    credit_period               date,
+    credit_period               int,
     credit_rate                 decimal,
     outstanding_loan_amount     decimal NOT NULL,
     credit_datetime             timestamp NOT NULL,

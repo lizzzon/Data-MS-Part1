@@ -41,7 +41,3 @@ ALTER TABLE logs
     ALTER COLUMN time_stamp SET DEFAULT now();
 
 ALTER TABLE companies ALTER COLUMN short_name DROP NOT NULL;
-
-DELETE FROM products WHERE product_name <> 'ASUS';
-
-DELETE FROM loans;
