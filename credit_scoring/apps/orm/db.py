@@ -26,7 +26,7 @@ class TemplateQuerySQL:
         return self.INSERT.substitute(table=table, i_keys=i_keys, i_values=i_values)
 
     def update(self, table: str, set_value: dict, where_values: str) -> str:
-        set_value = ','.join([f'{k} = {v}' for k, v in set_value.items()])
+        set_value = ','.join([f'{k}={v}' for k, v in set_value.items()])
         return self.UPDATE.substitute(table=table, set_value=set_value, where_values=where_values)
 
     def delete(self, table: str, where_values: str) -> str:

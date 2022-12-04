@@ -16,8 +16,8 @@ class LoginView(View):
         login_form = LoginForm(request.POST)
 
         if login_form.is_valid():
-            if AuthenticationHandler.login_handler(request=request, login_form=login_form):
-                return redirect(to='base')
+            if AuthenticationHandler().login_handler(request=request, login_form=login_form):
+                return redirect(to='profile')
 
         return render(request=request, template_name='authentication/login.html', context={'form': login_form})
 
@@ -31,7 +31,7 @@ class RegisterView(View):
         register_form = RegisterForm(request.POST)
 
         if register_form.is_valid():
-            AuthenticationHandler.register_handler(request=request, register_form=register_form)
-            return redirect(to='login')
+            if AuthenticationHandler().register_handler(register_form=register_form):
+                return redirect(to='login')
 
         return render(request=request, template_name='authentication/register.html', context={'form': register_form})
