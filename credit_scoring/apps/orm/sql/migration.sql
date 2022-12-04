@@ -9,7 +9,7 @@ CREATE TABLE users (
     id              int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     email           varchar(64) UNIQUE NOT NULL,
     username        varchar(16) UNIQUE NOT NULL,
-    user_password   varchar(32) UNIQUE NOT NULL,
+    user_password   varchar(128) UNIQUE NOT NULL,
     user_role       roles
 );
 
@@ -35,8 +35,8 @@ CREATE TABLE logs (
     user_id         int,
     staff_role_id   int,
     log_type        log_type NOT NULL,
-    log_message     varchar(64) NOT NULL,
-    time_stamp      timestamp NOT NULL,
+    log_message     varchar(64),
+    time_stamp      timestamp,
     CONSTRAINT fk_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
