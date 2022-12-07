@@ -1,12 +1,12 @@
 --Request with multiple conditions
 SELECT * FROM users
-WHERE email = 'mail.ru' AND user_role = 'staff'
+WHERE email LIKE '%@mail.ru' AND user_role = 'staff'
 ORDER BY username ASC;
 
 --Query with nested construct
 SELECT phone,
     (SELECT username FROM users
-     WHERE users.id = clients.id) AS first_name
+     WHERE email LIKE 'ponchik@mail.ru')
 FROM clients;
 
 --INNER JOIN
@@ -18,12 +18,12 @@ JOIN clients ON users.id = clients.user_id;
 --LEFT
 SELECT products.product_name, product_types.product_type_name
 FROM products
-LEFT JOIN product_types ON products.id = product_types.products_id;
+LEFT JOIN product_types ON products.product_type_id = product_types.id;
 
 --RIGHT
 SELECT products.product_name, product_types.product_type_name
-FROM product_types
-RIGHT JOIN products ON products.id = product_types.products_id;
+FROM products
+RIGHT JOIN product_types ON products.product_type_id = product_types.id;
 
 --FULL
 SELECT clients.first_name, clients.last_name
@@ -32,11 +32,6 @@ FULL JOIN loans ON clients.id = loans.client_id;
 
 --CROSS JOIN
 SELECT * FROM users CROSS JOIN staff;
-
---SELF JOIN
-SELECT c1.phone, c1.country_id, c2.phone
-FROM clients c1
-INNER JOIN clients c2 ON c1.id <> c2.id AND c1.country_id = c2.country_id;
 
 --GROUP BY
 SELECT product_amount, COUNT(*)
@@ -53,17 +48,17 @@ HAVING SUM(loans.order_amount) > 0
 ORDER BY clients.user_id;
 
 --UNION
-SELECT client_id, product_type_id
+SELECT client_id, product_id
 FROM loans
-UNION ALL SELECT client_id, product_type_id FROM products;
+UNION ALL SELECT company_id, product_type_id FROM products;
 
 --EXISTS
 SELECT log_type
 FROM logs l
 WHERE EXISTS
-    (SELECT 'warning'
-     FROM log_message m
-     WHERE m.log_id = l.id AND log_message = 'warning')
+    (SELECT log_message
+     FROM logs m
+     WHERE m.id = l.id AND log_message = 'problem')
 ORDER BY log_type;
 
 --INSERT INTO SELECT

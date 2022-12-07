@@ -177,3 +177,18 @@ INSERT INTO loans (client_id, company_id, product_id, loan_status, loan_type,
         '2020-08-05',
         '2024-10-27'
         );
+
+INSERT INTO logs (user_id, staff_role_id, log_type, log_message, time_stamp) VALUES (
+        1,
+        1,
+        'error',
+        'problem',
+        current_timestamp
+        );
+INSERT INTO logs (user_id, staff_role_id, log_type, log_message, time_stamp) VALUES (
+        2,
+        3,
+        'warning',
+        'problem',
+        current_timestamp
+        );
