@@ -6,9 +6,17 @@ from apps.config.config import connect
 
 class Migrations:
 
-    _migration_file = 'apps/migrations/migration.sql'
-    _procedures_file = 'apps/migrations/procedures.sql'
-    _triggers_file = 'apps/migrations/triggers.sql'
+    _migration_file = 'apps/migrations/sql_files/migration.sql'
+    _filling_file = 'apps/migrations/sql_files/filling.sql'
+    _procedures_file = 'apps/migrations/sql_files/procedures.sql'
+    _triggers_file = 'apps/migrations/sql_files/triggers.sql'
+
+    _files = (
+        _migration_file,
+        _filling_file,
+        _procedures_file,
+        _triggers_file,
+    )
 
     def __init__(self):
         self._cursor = connect.cursor()
@@ -25,21 +33,13 @@ class Migrations:
     def make_migrate(self) -> None:
         print('Start migrations')
 
-        self.migration()
-        # self.procedures()
-        # self.triggers()
+        for file in self._files:
+            self.execute(file)
         self._cursor.close()
 
         print('Migrations success!')
 
-    def migration(self) -> None:
-        self._cursor.execute(self._read_sql_file(self._migration_file))
-        connect.commit()
-
-    def procedures(self) -> None:
-        self._cursor.execute(self._read_sql_file(self._procedures_file))
-        connect.commit()
-
-    def triggers(self) -> None:
-        self._cursor.execute(self._read_sql_file(self._triggers_file))
+    def execute(self, path: str) -> None:
+        self._cursor.execute(self._read_sql_file(path))
+        print(f'Execute {path}')
         connect.commit()

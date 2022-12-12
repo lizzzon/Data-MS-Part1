@@ -1,8 +1,7 @@
-from apps.processing.abc_menu import ABCMenu
+from apps.processing.abstract_menu import ABCMenu
+from apps.templates.menu_templates import BASE_MSG
+
+from apps.config.config import current_user
+from apps.models.database_models import UserRoleEnum
 
 
-class BaseMenu(ABCMenu):
-
-    def menu(self):
-        print('base')
-        pass

@@ -1,5 +1,5 @@
 from apps.migrations.migration import Migrations
-from apps.processing.menu import Menu
+from apps.processing.menu_processing import Menu
 
 class Main:
 
