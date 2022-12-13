@@ -9,7 +9,7 @@ CREATE TABLE users (
     id              int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     email           varchar(64) UNIQUE NOT NULL,
     username        varchar(16) UNIQUE NOT NULL,
-    user_password   varchar(128) UNIQUE NOT NULL,
+    user_password   varchar(128) NOT NULL,
     user_role       roles,
     is_active       boolean default false NOT NULL,
     is_login        boolean default false NOT NULL

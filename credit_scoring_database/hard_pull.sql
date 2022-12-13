@@ -10,9 +10,47 @@ SELECT phone,
 FROM clients;
 
 --INNER JOIN
-SELECT users.username
-FROM users
-JOIN clients ON users.id = clients.user_id;
+SELECT companies.company_name, product_types.product_type_name, products.product_name,
+    products.product_cost, products.product_amount
+FROM products
+INNER JOIN product_types ON products.product_type_id = product_types.id
+INNER JOIN companies ON products.company_id = companies.id;
+
+SELECT clients.last_name, clients.first_name, companies.company_name, products.product_name,
+    products.product_cost, loans.loan_status, loans.loan_type, loans.order_amount,
+    loans.credit_period, loans.credit_rate
+FROM loans
+INNER JOIN clients ON loans.client_id = clients.id
+INNER JOIN companies ON loans.company_id = companies.id
+INNER JOIN products ON loans.product_id = products.id
+WHERE loan_status = 'created' OR loan_status = 'confirmed' OR loan_status = 'issued';
+
+SELECT citizenships.citizenship_name, documents.current_type, documents.documents_number,
+    documents.issue_date, documents.exipration_date
+FROM documents
+INNER JOIN citizenships ON documents.citizenship_id = citizenships.id;
+
+SELECT users.username, countries.country_name, cities.city_name, clients.last_name,
+       clients.first_name, clients.middle_name, clients.sex, clients.birth_date,
+       clients.phone, clients.address
+FROM clients
+INNER JOIN users ON clients.user_id = users.id
+INNER JOIN countries ON clients.country_id = countries.id
+INNER JOIN city ON clients.city_id = cities.id;
+
+SELECT users.username, users.email, countries.country_name, cities.city_name,
+       documents.current_type, clients.last_name, clients.first_name,
+       clients.sex, clients.birth_date, clients.phone, clients.address
+FROM clients
+INNER JOIN users ON clients.user_id = users.id
+INNER JOIN countries ON clients.country_id = countries.id
+INNER JOIN cities ON clients.city_id = cities.id
+INNER JOIN documents ON clients.document_id = documents.id;
+
+SELECT users.username, users.email, staff_roles.staff_role_name
+FROM staff
+INNER JOIN users ON staff.user_id = users.id
+INNER JOIN staff_roles ON staff.staff_role_id = staff_roles.id;
 
 --OUTER JOIN
 --LEFT

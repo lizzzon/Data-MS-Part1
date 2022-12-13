@@ -83,7 +83,7 @@ INSERT INTO products (company_id, product_type_id, product_name,
 INSERT INTO products (company_id, product_type_id, product_name,
                       product_cost, product_amount) VALUES (
         1,
-        2,
+        3,
         'ASUS zenbook',
         99.50,
         30
@@ -143,7 +143,7 @@ INSERT INTO clients (user_id, country_id, city_id, document_id, last_name,
         'Sergeevich',
         'male',
         '1967-12-15',
-        '+375298514567',
+        '+375442343267',
         'test address'
         );
 

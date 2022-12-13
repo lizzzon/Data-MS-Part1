@@ -1,4 +1,4 @@
---PROCEDURES
+-- PROCEDURES
 
 CREATE OR REPLACE PROCEDURE change_client_name(current_user_id int, new_name varchar)
 LANGUAGE plpgsql AS $$
