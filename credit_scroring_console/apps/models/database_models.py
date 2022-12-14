@@ -184,5 +184,3 @@ class LoansModel(BaseModel):
             Decimal: lambda d: float(str(d)),
             datetime: lambda d: d.strftime('%Y-%m-%dT%H:%M:%SZ'),
         }
-
-

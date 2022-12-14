@@ -48,7 +48,7 @@ class SQLCommands:
     def update_execute(cls, table: str, set_dict: dict, where_str: str) -> None:
         cursor = connect.cursor()
 
-        set_dict = ','.join([f'{k}={v}' for k, v in set_dict.items()])
+        set_dict = ','.join([f"{k}='{v}'" for k, v in set_dict.items()])
         cursor.execute(f'UPDATE {table} SET {set_dict} WHERE {where_str};')
 
         cursor.close()
