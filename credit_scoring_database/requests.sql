@@ -22,10 +22,6 @@ UPDATE users SET user_password = '374type73'
 UPDATE loans SET order_amount = order_amount + 1
 WHERE client_id = 1 AND product_id = 1;
 
-UPDATE products SET product_name = product_name + 1 FROM product_types
-                WHERE product_types.product_type_name = 'Computer'
-                AND products.id = product_types.id;
-
 ALTER TABLE companies ADD COLUMN address VARCHAR(32);
 
 ALTER TABLE companies DROP COLUMN address RESTRICT;

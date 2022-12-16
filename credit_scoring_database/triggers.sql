@@ -1,4 +1,6 @@
 -- TRIGGERS
+DROP TRIGGER IF EXISTS user_logging_trigger;
+
 CREATE OR REPLACE FUNCTION user_logs()
 RETURNS TRIGGER AS $logging$
 DECLARE log_msg varchar;

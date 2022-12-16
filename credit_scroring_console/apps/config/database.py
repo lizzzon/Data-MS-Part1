@@ -7,7 +7,7 @@ class DataBaseConfig:
         "database": "credit_scoring",
         "user": "postgres",
         "password": "postgrespw",
-        "port": "49153",
+        "port": "5431",
     }
 
     def connect(self):

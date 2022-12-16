@@ -84,11 +84,7 @@ class ClientMenu(ABCMenu):
 
         if not user.is_active:
             user.is_active = True
-            SQLCommands.update_execute(
-                table='users',
-                set_dict={'is_active': True},
-                where_str=f'id = {user.id}',
-            )
+            SQLCommands.update_user_active(user.id, user.is_active)
 
         dict_model.update({'user_id': user.id})
         if not current_client.get():
@@ -96,18 +92,19 @@ class ClientMenu(ABCMenu):
                 table='clients',
                 dict_model=dict_model,
             )
-            client = SQLCommands.select_one_execute(
-                table='clients',
-                where_str=f'user_id = {user.id}',
-                model=ClientModel,
-            )
-            current_client.set(client)
         else:
             SQLCommands.update_execute(
                 table='clients',
                 set_dict=dict_model,
                 where_str=f'user_id = {user.id}'
             )
+
+        client = SQLCommands.select_one_execute(
+            table='clients',
+            where_str=f'user_id = {user.id}',
+            model=ClientModel,
+        )
+        current_client.set(client)
 
         print('Успешно!\n')
 
@@ -308,11 +305,7 @@ class CompanyMenu(ABCMenu):
 
         if not user.is_active:
             user.is_active = True
-            SQLCommands.update_execute(
-                table='users',
-                set_dict={'is_active': True},
-                where_str=f'id = {user.id}',
-            )
+            SQLCommands.update_user_active(user.id, user.is_active)
 
         dict_model.update({'user_id': user.id})
 
@@ -321,18 +314,19 @@ class CompanyMenu(ABCMenu):
                 table='companies',
                 dict_model=dict_model,
             )
-            company = SQLCommands.select_one_execute(
-                table='companies',
-                where_str=f'user_id = {user.id}',
-                model=CompanyModel,
-            )
-            current_client.set(company)
         else:
             SQLCommands.update_execute(
                 table='companies',
                 set_dict=dict_model,
                 where_str=f'user_id = {user.id}'
             )
+
+        company = SQLCommands.select_one_execute(
+            table='companies',
+            where_str=f'user_id = {user.id}',
+            model=CompanyModel,
+        )
+        current_client.set(company)
 
         print('Успешно!\n')
 
@@ -501,11 +495,7 @@ class StaffMenu(ABCMenu):
 
         if not user.is_active:
             user.is_active = True
-            SQLCommands.update_execute(
-                table='users',
-                set_dict={'is_active': True},
-                where_str=f'id = {user.id}',
-            )
+            SQLCommands.update_user_active(user.id, user.is_active)
 
         dict_model.update({'user_id': user.id})
 
@@ -679,11 +669,7 @@ class LoginMenu(ABCMenu):
                     return StartMenu
                 continue
 
-            user_from_db: Optional[UserModel] = SQLCommands.select_one_execute(
-                table='users',
-                where_str=f"username = '{user.username}'",
-                model=UserModel,
-            )
+            user_from_db: Optional[UserModel] = SQLCommands.get_user(user.username)
 
             if not user_from_db:
                 print(f'Пользователь {user.username} не найден!')
@@ -722,11 +708,7 @@ class RegisterMenu(ABCMenu):
                     return StartMenu
                 continue
 
-            user_from_db: Optional[UserModel] = SQLCommands.select_one_execute(
-                table='users',
-                where_str=f"username = '{user.username}'",
-                model=UserModel,
-            )
+            user_from_db: Optional[UserModel] = SQLCommands.get_user(user.username)
 
             if user_from_db:
                 print(f'Пользователь {user.username} уже существует!')
@@ -734,10 +716,7 @@ class RegisterMenu(ABCMenu):
                     return StartMenu
                 continue
 
-            SQLCommands.insert_execute(
-                table='users',
-                dict_model=dict_model,
-            )
+            SQLCommands.create_user(dict_model)
 
             print('Успешная регистрация!')
             break

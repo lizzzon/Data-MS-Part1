@@ -18,3 +18,12 @@ BEGIN
     WHERE id = current_user_id;
 END;
 $$;
+
+
+CREATE OR REPLACE PROCEDURE insert_person()
+LANGUAGE plpgsql AS $$
+BEGIN
+ INSERT INTO {table}
+     {keys} VALUES {values};
+END;
+$$;

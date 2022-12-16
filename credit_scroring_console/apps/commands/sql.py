@@ -1,7 +1,10 @@
 from typing import Optional
 from pydantic import BaseModel
+import pymssql
+import pandas as pd
 
 from apps.config.config import connect
+from apps.models.database_models import UserModel
 
 
 class SQLCommands:
@@ -13,9 +16,42 @@ class SQLCommands:
         return keys, values
 
     @classmethod
+    def get_user(cls, username: str) -> Optional[UserModel]:
+        cursor = connect.cursor()
+        cursor.execute(f"SELECT get_user('{username}')")
+        result: tuple = cursor.fetchone()
+
+        cursor.close()
+        connect.commit()
+
+        try:
+            result = result[0].strip('()').split(',')
+            result = [int(result[0])] + result[1:]  # type: ignore
+        except Exception:
+            return None
+
+        return UserModel(**{k: v for k, v in zip(UserModel().dict().keys(), result)}) if result else None
+
+    @classmethod
+    def create_user(cls, user_dict: dict) -> None:
+        cursor = connect.cursor()
+        _, values = zip(*user_dict.items())
+        cursor.execute(f'CALL insert_user{values}')
+
+        cursor.close()
+        connect.commit()
+
+    @classmethod
+    def update_user_active(cls, user_id: int, is_active: bool) -> None:
+        cursor = connect.cursor()
+        cursor.execute(f'CALL change_user_active({user_id}, {is_active})')
+
+        cursor.close()
+        connect.commit()
+
+    @classmethod
     def select_one_execute(cls, table: str, where_str: str, model: BaseModel()) -> Optional[BaseModel]:
         cursor = connect.cursor()
-
         cursor.execute(f'SELECT * FROM {table} WHERE {where_str};')
         result: tuple = cursor.fetchone()
 
